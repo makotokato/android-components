@@ -66,6 +66,11 @@ class ErrorPagesTest {
             ""
         }
 
+        val showSSLAdvanced: String = when (errorType) {
+            ErrorType.ERROR_SECURITY_BAD_CERT -> true
+            else -> false
+        }.toString()
+
         assertTrue(errorPage.startsWith("resource://android/assets/$htmlFilename"))
         assertTrue(errorPage.contains("&button=${context.resources.getString(errorType.refreshButtonRes).urlEncode()}"))
 
@@ -73,5 +78,6 @@ class ErrorPagesTest {
 
         assertTrue(errorPage.contains("&description=${description.urlEncode()}"))
         assertTrue(errorPage.contains("&image=$expectedImageName"))
+        assertTrue(errorPage.contains("&showSSL=${showSSLAdvanced.urlEncode()}"))
     }
 }
